@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace policeDataApi_Practice.Dtos
 {
-    public class StreetLevelOutcomesDto
+    public class StreetLevelOutcomesReadDto
     {
         public class Rootobject
         {

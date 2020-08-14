@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using policeDataApi_Practice.Dtos;
+using policeDataApi_Practice.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,8 @@ namespace policeDataApi_Practice.Profiles
     {
         public ApiCallProfile()
         {
-
+            CreateMap<StreetLevelCrimesModel, StreetLevelCrimesReadDto>();
+            CreateMap<StreetLevelOutcomesModel, StreetLevelOutcomesReadDto>();
         }
     }
 }
