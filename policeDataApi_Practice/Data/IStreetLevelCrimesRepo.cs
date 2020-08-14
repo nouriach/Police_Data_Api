@@ -1,4 +1,5 @@
-﻿using System;
+﻿using policeDataApi_Practice.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +21,10 @@ namespace policeDataApi_Practice.Data
             5. GetAllStreetLevelCrimesByCategory
          */
 
+        IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocation();
+        IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocationAndTime();
+        IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocationAndCategory();
+        StreetLevelCrimesModel GetStreetLevelCrimeById();
 
     }
 }
