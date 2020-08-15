@@ -17,15 +17,13 @@ namespace policeDataApi_Practice.Controllers
     {
         private readonly IStreetLevelCrimesRepo _crimesRepo;
         private readonly IStreetLevelOutcomesRepo _crimesOutcomesRepo;
-        private readonly IMapper _mapper;
-        private readonly IHttpClientFactory _clientFactory;
+        // private readonly IMapper _mapper;
 
-        public StreetCrimesController(IStreetLevelCrimesRepo crimesRepo, IStreetLevelOutcomesRepo crimesOutcomesRepo, IMapper mapper, IHttpClientFactory clientFactory)
+        public StreetCrimesController(IStreetLevelCrimesRepo crimesRepo, IStreetLevelOutcomesRepo crimesOutcomesRepo)
         {
             _crimesRepo = crimesRepo;
             _crimesOutcomesRepo = crimesOutcomesRepo;
-            _mapper = mapper;
-            _clientFactory = clientFactory;
+            // _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -35,18 +33,48 @@ namespace policeDataApi_Practice.Controllers
 
         // -- GET api/streetcrime
         [HttpGet]
-        public async Task<ActionResult> GetAllStreetCrimes()
+        public async Task <ActionResult<StreetLevelCrimesModel[]>> GetAllStreetCrimes()
         {
             var streetLevelResults = await _crimesRepo.GetAllStreetLevelCrimesByLocation();
 
             if (streetLevelResults != null)
             {
-                // var test = _mapper.Map<IEnumerable<StreetLevelCrimesReadDto[]>>(streetLevelResults);
-
                 return Ok(streetLevelResults);
             }
             return NotFound();
         }
 
+        // -- GET api/streetcrime/{id}
+        [HttpGet]
+        [Route("GetStreetCrimeById/{id}")]
+        public async Task<ActionResult<StreetLevelCrimesModel>> GetStreetCrimeById(int id)
+        {
+            // PLACEHOLDER ID: 84551281, this works in Postman
+            var streetLevelResult = await _crimesRepo.GetStreetLevelCrimeById(id);
+
+            if (streetLevelResult != null)
+            {
+                return Ok(streetLevelResult);
+            }
+
+            return NotFound();
+        }
+
+        // GET api/streetcrime/{category}
+        [HttpGet]
+        [Route("GetStreetCrimesByCategory/{category}")]
+
+        public async Task<ActionResult<StreetLevelCrimesModel[]>> GetStreetCrimesByCategory(string category)
+        {
+            // PLACEHOLDER CATEGORY 'burglary', works in Postman
+            var streetLevelResultsByCategory = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndCategory(category);
+
+            if (streetLevelResultsByCategory != null)
+            {
+                return Ok(streetLevelResultsByCategory);
+            }
+
+            return NotFound();
+        }
     }
 }
