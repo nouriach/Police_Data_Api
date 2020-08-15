@@ -8,6 +8,10 @@ namespace policeDataApi_Practice.Data
 {
     public class CallStreetLevelOutcomesApiRepo : IStreetLevelOutcomesRepo
     {
+        public CallStreetLevelOutcomesApiRepo()
+        {
+
+        }
         public IEnumerable<StreetLevelOutcomesModel> GetAllStreetLevelOutcomesByLocation()
         {
             throw new NotImplementedException();
