@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using policeDataApi_Practice.Data;
-using policeDataApi_Practice.Dtos;
 using policeDataApi_Practice.Models;
 
 namespace policeDataApi_Practice.Controllers
@@ -17,13 +15,11 @@ namespace policeDataApi_Practice.Controllers
     {
         private readonly IStreetLevelCrimesRepo _crimesRepo;
         private readonly IStreetLevelOutcomesRepo _crimesOutcomesRepo;
-        // private readonly IMapper _mapper;
 
         public StreetCrimesController(IStreetLevelCrimesRepo crimesRepo, IStreetLevelOutcomesRepo crimesOutcomesRepo)
         {
             _crimesRepo = crimesRepo;
             _crimesOutcomesRepo = crimesOutcomesRepo;
-            // _mapper = mapper;
         }
 
         public IActionResult Index()
