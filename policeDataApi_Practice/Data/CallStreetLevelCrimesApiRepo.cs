@@ -70,7 +70,7 @@ namespace policeDataApi_Practice.Data
             var matchCrimesByCategory = new List<StreetLevelCrimesModel>();
 
             // placeholder longitude and latitude, it works in postman
-            var request = new HttpRequestMessage(HttpMethod.Get, $"?{category}&lat=52.629729&lng=-1.131592");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?{category.ToLower()}&lat=52.629729&lng=-1.131592");
             var client = _clientFactory.CreateClient("street-level-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
@@ -87,8 +87,28 @@ namespace policeDataApi_Practice.Data
                     }
                 }
 
-                StreetLevelCrimesModel[] finalCrimeArray = matchCrimesByCategory.ToArray();
-                return finalCrimeArray;
+                _streetLevelCrimes = matchCrimesByCategory.ToArray();
+                return _streetLevelCrimes;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime(string date)
+        {
+            // placeholder longitude and latitude, it works in postman
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&lat=52.629729&lng=-1.131592");
+            var client = _clientFactory.CreateClient("street-level-crimes");
+            HttpResponseMessage resp = await client.SendAsync(request);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var jsonString = await resp.Content.ReadAsStringAsync();
+                var jsonModel = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
+
+                return jsonModel;
             }
             else
             {
@@ -101,5 +121,9 @@ namespace policeDataApi_Practice.Data
             throw new NotImplementedException();
         }
 
+        public Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndCategoryAndTime(string category, string date)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

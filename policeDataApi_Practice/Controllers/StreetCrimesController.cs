@@ -44,7 +44,7 @@ namespace policeDataApi_Practice.Controllers
             return NotFound();
         }
 
-        // -- GET api/streetcrime/{id}
+        // -- GET api/streetcrime/GetStreetCrimeById/{id}
         [HttpGet]
         [Route("GetStreetCrimeById/{id}")]
         public async Task<ActionResult<StreetLevelCrimesModel>> GetStreetCrimeById(int id)
@@ -60,7 +60,7 @@ namespace policeDataApi_Practice.Controllers
             return NotFound();
         }
 
-        // GET api/streetcrime/{category}
+        // GET api/streetcrime/GetStreetCrimesByCategory/{category}
         [HttpGet]
         [Route("GetStreetCrimesByCategory/{category}")]
 
@@ -76,5 +76,22 @@ namespace policeDataApi_Practice.Controllers
 
             return NotFound();
         }
+
+        // GET api/streetcrime/GetStreetCrimesByCategory/{category}
+        [HttpGet]
+        [Route("GetStreetCrimeByLocationAndDate/{date}")]
+        public async Task <ActionResult<StreetLevelCrimesModel[]>> GetStreetCrimeByLocationAndDate(string date)
+        {
+            // PLACEHOLDER DATE needs to be YYYY-MM, '2019-01' works in Postman
+            var streetLevelResultsByDate = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndTime(date);
+
+            if (streetLevelResultsByDate != null)
+            {
+                return Ok(streetLevelResultsByDate);
+            }
+
+            return NotFound();
+        } 
+
     }
 }
