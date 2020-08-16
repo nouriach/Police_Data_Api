@@ -26,8 +26,6 @@ namespace policeDataApi_Practice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             services.AddHttpClient();
 
             services.AddHttpClient("street-level-all-crimes", slc =>
