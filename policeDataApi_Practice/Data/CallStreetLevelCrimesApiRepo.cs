@@ -14,6 +14,8 @@ namespace policeDataApi_Practice.Data
     {
         private readonly IHttpClientFactory _clientFactory;
         private StreetLevelCrimesModel[] _streetLevelCrimes;
+        // placeholder longitude and latitude, it works in postman
+        private readonly string _defaultLocation = "lat=52.629729&lng=-1.131592";
 
 
         public CallStreetLevelCrimesApiRepo(IHttpClientFactory clientFactory)
@@ -24,7 +26,7 @@ namespace policeDataApi_Practice.Data
         public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocation()
         {
             // placeholder longitude and latitude, it works in postman
-            var request = new HttpRequestMessage(HttpMethod.Get, "?lat=52.629729&lng=-1.131592");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?{_defaultLocation}");
             var client = _clientFactory.CreateClient("street-level-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
@@ -41,8 +43,7 @@ namespace policeDataApi_Practice.Data
         }
         public async Task <StreetLevelCrimesModel> GetStreetLevelCrimeById(int id)
         {
-            // placeholder longitude and latitude, it works in postman
-            var request = new HttpRequestMessage(HttpMethod.Get, "?lat=52.629729&lng=-1.131592");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?{_defaultLocation}");
             var client = _clientFactory.CreateClient("street-level-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
@@ -69,8 +70,7 @@ namespace policeDataApi_Practice.Data
         {
             var matchCrimesByCategory = new List<StreetLevelCrimesModel>();
 
-            // placeholder longitude and latitude, it works in postman
-            var request = new HttpRequestMessage(HttpMethod.Get, $"?{category.ToLower()}&lat=52.629729&lng=-1.131592");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?{category.ToLower()}&{_defaultLocation}");
             var client = _clientFactory.CreateClient("street-level-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
@@ -98,8 +98,7 @@ namespace policeDataApi_Practice.Data
 
         public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime(string date)
         {
-            // placeholder longitude and latitude, it works in postman
-            var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&lat=52.629729&lng=-1.131592");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&{_defaultLocation}");
             var client = _clientFactory.CreateClient("street-level-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
@@ -116,14 +115,34 @@ namespace policeDataApi_Practice.Data
             }
         }
 
-        public Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime()
+        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndCategoryAndTime(string category, string date)
         {
-            throw new NotImplementedException();
-        }
+            var matchCrimesByCategory = new List<StreetLevelCrimesModel>();
 
-        public Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndCategoryAndTime(string category, string date)
-        {
-            throw new NotImplementedException();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&{_defaultLocation}");
+            var client = _clientFactory.CreateClient("street-level-crimes");
+            HttpResponseMessage resp = await client.SendAsync(request);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var jsonString = await resp.Content.ReadAsStringAsync();
+                var jsonModel = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
+
+                foreach (var result in jsonModel)
+                {
+                    if (result.category.ToLower() == category.ToLower())
+                    {
+                        matchCrimesByCategory.Add(result);
+                    }
+                }
+
+                _streetLevelCrimes = matchCrimesByCategory.ToArray();
+                return _streetLevelCrimes;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

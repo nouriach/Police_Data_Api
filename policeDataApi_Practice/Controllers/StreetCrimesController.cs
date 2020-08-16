@@ -91,7 +91,24 @@ namespace policeDataApi_Practice.Controllers
             }
 
             return NotFound();
-        } 
+        }
+
+        // GET api/streetcrime/GetStreetCrimesByLocationAndCategoryAndTime/{category}/{date}
+        [HttpGet]
+        [Route("GetStreetCrimesByLocationAndCategoryAndTime/{category}/{date}")]
+        public async Task<ActionResult<StreetLevelCrimesModel>> GetStreetCrimesByLocationAndCategoryAndTime(string category, string date)
+        {
+            // PLACEHOLDER DATE needs to be YYYY-MM, '2019-01' & burglary works in Postman
+            var streetLevelResultByDateAndCategory = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndCategoryAndTime(category, date);
+
+            if (streetLevelResultByDateAndCategory != null)
+            {
+                return Ok(streetLevelResultByDateAndCategory);
+            }
+
+            return NotFound();
+        }
+
 
     }
 }
