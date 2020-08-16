@@ -77,7 +77,7 @@ namespace policeDataApi_Practice.Controllers
             return NotFound();
         }
 
-        // GET api/streetcrime/GetStreetCrimesByCategory/{category}
+        // GET api/streetcrime/GetStreetCrimeByLocationAndDate/{date}
         [HttpGet]
         [Route("GetStreetCrimeByLocationAndDate/{date}")]
         public async Task <ActionResult<StreetLevelCrimesModel[]>> GetStreetCrimeByLocationAndDate(string date)
