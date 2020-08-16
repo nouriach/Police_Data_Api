@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace policeDataApi_Practice.Models
+namespace policeDataApi_Practice.Dtos
 {
-    public partial class StreetLevelCrimesModel
+    public partial class StreetLevelCrimesReadDto
     {
         public string category { get; set; }
         public string location_type { get; set; }

@@ -21,10 +21,11 @@ namespace policeDataApi_Practice.Data
             5. GetAllStreetLevelCrimesByCategory
          */
 
-        IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocation();
-        IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocationAndTime();
-        IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocationAndCategory();
-        StreetLevelCrimesModel GetStreetLevelCrimeById();
+        Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocation();
+        Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime(string date);
+        Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndCategory(string category);
+        Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndCategoryAndTime(string category, string date);
+        Task<StreetLevelCrimesModel> GetStreetLevelCrimeById(int id);
 
     }
 }

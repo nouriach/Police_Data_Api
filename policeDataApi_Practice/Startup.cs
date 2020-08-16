@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,17 +26,25 @@ namespace policeDataApi_Practice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddHttpClient();
+
+            services.AddHttpClient("street-level-all-crimes", slc =>
+            {
+                slc.BaseAddress = new Uri(Configuration.GetValue<string>("StreetLevelAllCrimesAPI"));
+            });
 
             services.AddHttpClient("street-level-crimes", slc =>
             {
-                slc.BaseAddress = new Uri(Configuration.GetValue<string>("StreetLevelCrimesAPI"));
+                slc.BaseAddress = new Uri(Configuration.GetValue<string>("StreetLevelCrimesByCategoryAPI"));
             });
 
             services.AddHttpClient("street-level-outcomes", slc =>
             {
                 slc.BaseAddress = new Uri(Configuration.GetValue<string>("StreetLevelOutcomesAPI"));
             });
+
 
             services.AddScoped<IStreetLevelCrimesRepo, CallStreetLevelCrimesApiRepo>();
             services.AddScoped<IStreetLevelOutcomesRepo, CallStreetLevelOutcomesApiRepo>();

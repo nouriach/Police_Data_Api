@@ -2,30 +2,124 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace policeDataApi_Practice.Data
 {
     public class CallStreetLevelCrimesApiRepo : IStreetLevelCrimesRepo
     {
-        public IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocation()
+        private readonly IHttpClientFactory _clientFactory;
+        private StreetLevelCrimesModel[] _streetLevelCrimes;
+        // placeholder longitude and latitude, it works in postman
+        private readonly string _defaultLocation = "lat=52.629729&lng=-1.131592";
+
+
+        public CallStreetLevelCrimesApiRepo(IHttpClientFactory clientFactory)
         {
-            throw new NotImplementedException();
+            _clientFactory = clientFactory;
         }
 
-        public IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocationAndCategory()
+        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocation()
         {
-            throw new NotImplementedException();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?{_defaultLocation}");
+            var client = _clientFactory.CreateClient("street-level-all-crimes");
+            HttpResponseMessage resp = await client.SendAsync(request);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var jsonString = await resp.Content.ReadAsStringAsync();
+                _streetLevelCrimes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
+                return _streetLevelCrimes;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public async Task <StreetLevelCrimesModel> GetStreetLevelCrimeById(int id)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?{_defaultLocation}");
+            var client = _clientFactory.CreateClient("street-level-all-crimes");
+            HttpResponseMessage resp = await client.SendAsync(request);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var jsonString = await resp.Content.ReadAsStringAsync();
+                _streetLevelCrimes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
+                foreach (var result in _streetLevelCrimes)
+                {
+                    if(result.id == id)
+                    {
+                        return result;
+                    }
+                }
+                return null;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public IEnumerable<StreetLevelCrimesModel> GetAllStreetLevelCrimesByLocationAndTime()
+        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndCategory(string category)
         {
-            throw new NotImplementedException();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{category.ToLower()}?{_defaultLocation}");
+            var client = _clientFactory.CreateClient("street-level-crimes");
+            HttpResponseMessage resp = await client.SendAsync(request);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var jsonString = await resp.Content.ReadAsStringAsync();
+                _streetLevelCrimes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
+
+                return _streetLevelCrimes;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public StreetLevelCrimesModel GetStreetLevelCrimeById()
+        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime(string date)
         {
-            throw new NotImplementedException();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&{_defaultLocation}");
+            var client = _clientFactory.CreateClient("street-level-all-crimes");
+            HttpResponseMessage resp = await client.SendAsync(request);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var jsonString = await resp.Content.ReadAsStringAsync();
+                _streetLevelCrimes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
+
+                return _streetLevelCrimes;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndCategoryAndTime(string category, string date)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{category}?date={date}&{_defaultLocation}");
+            var client = _clientFactory.CreateClient("street-level-crimes");
+            HttpResponseMessage resp = await client.SendAsync(request);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var jsonString = await resp.Content.ReadAsStringAsync();
+                _streetLevelCrimes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
+
+                return _streetLevelCrimes;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
