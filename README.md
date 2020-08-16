@@ -11,11 +11,13 @@ Use the Police Data API to return information on Street Level Crimes
 ### At present the following data is returned:
 
 **Return all Street Level Crimes for a specific location**
+
 *When running locally, hit the endpoint - http://localhost:5000/api/streetcrime
 
 ###### status: complete
 
 **Return a specific Street Crime by Id**
+
 *When running locally, hit the endpoint - http://localhost:5000/api/streetcrime/GetStreetCrimeById/{id}
 Example Id to use for testing purposes: 84551281
 
@@ -23,18 +25,21 @@ Example Id to use for testing purposes: 84551281
 ###### status: complete
 
 **Return a list of Street Level Crimes by Category**
+
 *When running locally, hit the endpoint - http://localhost:5000/api/streetcrime/GetStreetCrimesByCategory/{category}
 Example Category to use for testing purposes: 'burglary'
 
 ###### status: complete
 
 **Return a list of Street Level Crimes by Date**
+
 *When running locally, hit the endpoint - http://localhost:5000/api/streetcrime/GetStreetCrimeByLocationAndDate/{date}
 Example Date to use for testing purposes: 2019-01 (format needs to be YYYY-MM)
 
 ###### status: complete
 
 **Return a list of Street Level Crimes by Date and Category**
+
 *When running locally, hit the endpoint - http://localhost:5000/api/streetcrime/GetStreetCrimesByLocationAndCategoryAndTime/{category}/{date}
 Example Category and Date to use for testing purposes: 'burglary' & 2019-01
 
