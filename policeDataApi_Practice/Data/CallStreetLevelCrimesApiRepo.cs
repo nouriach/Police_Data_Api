@@ -27,7 +27,7 @@ namespace policeDataApi_Practice.Data
         {
             // placeholder longitude and latitude, it works in postman
             var request = new HttpRequestMessage(HttpMethod.Get, $"?{_defaultLocation}");
-            var client = _clientFactory.CreateClient("street-level-crimes");
+            var client = _clientFactory.CreateClient("street-level-all-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
             if (resp.IsSuccessStatusCode)
@@ -44,7 +44,7 @@ namespace policeDataApi_Practice.Data
         public async Task <StreetLevelCrimesModel> GetStreetLevelCrimeById(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"?{_defaultLocation}");
-            var client = _clientFactory.CreateClient("street-level-crimes");
+            var client = _clientFactory.CreateClient("street-level-all-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
             if (resp.IsSuccessStatusCode)
@@ -71,7 +71,7 @@ namespace policeDataApi_Practice.Data
             var matchCrimesByCategory = new List<StreetLevelCrimesModel>();
 
             var request = new HttpRequestMessage(HttpMethod.Get, $"?{category.ToLower()}&{_defaultLocation}");
-            var client = _clientFactory.CreateClient("street-level-crimes");
+            var client = _clientFactory.CreateClient("street-level-all-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
             if (resp.IsSuccessStatusCode)
@@ -99,7 +99,7 @@ namespace policeDataApi_Practice.Data
         public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime(string date)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&{_defaultLocation}");
-            var client = _clientFactory.CreateClient("street-level-crimes");
+            var client = _clientFactory.CreateClient("street-level-all-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
             if (resp.IsSuccessStatusCode)
@@ -120,7 +120,7 @@ namespace policeDataApi_Practice.Data
             var matchCrimesByCategory = new List<StreetLevelCrimesModel>();
 
             var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&{_defaultLocation}");
-            var client = _clientFactory.CreateClient("street-level-crimes");
+            var client = _clientFactory.CreateClient("street-level-all-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
             if (resp.IsSuccessStatusCode)

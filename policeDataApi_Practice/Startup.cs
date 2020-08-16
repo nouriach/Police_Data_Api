@@ -30,9 +30,9 @@ namespace policeDataApi_Practice
 
             services.AddHttpClient();
 
-            services.AddHttpClient("street-level-crimes", slc =>
+            services.AddHttpClient("street-level-all-crimes", slc =>
             {
-                slc.BaseAddress = new Uri(Configuration.GetValue<string>("StreetLevelCrimesAPI"));
+                slc.BaseAddress = new Uri(Configuration.GetValue<string>("StreetLevelAllCrimesAPI"));
             });
 
             services.AddHttpClient("street-level-outcomes", slc =>
