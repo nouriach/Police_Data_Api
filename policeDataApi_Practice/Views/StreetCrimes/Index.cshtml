@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
@@ -7,8 +6,8 @@
 
 <form>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Select a month</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label>Select a month</label>
+        <select class="form-control" >
             <option>January</option>
             <option>February</option>
             <option>March</option>
@@ -24,8 +23,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Select a year</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label>Select a year</label>
+        <select class="form-control">
             <option>2020</option>
             <option>2019</option>
             <option>2018</option>
@@ -33,6 +32,8 @@
             <option>2016</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" asp-controller="StreetCrimes" asp-action="GetStreetCrimeByLocationAndDate">Submit</button>
+    </div>
 </form>
 
