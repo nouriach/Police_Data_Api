@@ -6,15 +6,35 @@
 
 <h1>Search for Crimes</h1>
 
-<form asp-controller="FilterStreetCrimes" asp-action="Index" method="post">
 
-    <select asp-for="Month" asp-items="Model.Months">
-        <option>Please select one</option>
-    </select>
-    <select asp-for="Year" asp-items="Model.Years">
-        <option>Please select one</option>
-    </select>
+@{ 
+    if (Model.CrimesLoaded == true)
+    {
+        <div>
+            <h2>Crimes for @Model.Month, @Model.Year</h2>
+            <h4>Total Crimes in Your Area Over Selected Period: @Model.Crimes.Count()</h4>
+        </div>
+        <div>
+            @foreach( var crime in Model.Crimes)
+            {
+                <h3>@crime.category</h3>
+                <p>@crime.location.street.name</p>
+            }
+        </div>
+    }
+    else
+    {
+        <form asp-controller="FilterStreetCrimes" asp-action="Index" method="post">
 
-    <input type="submit" />
+            <select asp-for="Month" asp-items="Model.Months">
+                <option>Please select one</option>
+            </select>
+            <select asp-for="Year" asp-items="Model.Years">
+                <option>Please select one</option>
+            </select>
 
-</form>
+            <input type="submit" />
+
+        </form>
+    }
+}

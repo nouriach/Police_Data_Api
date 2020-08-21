@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using policeDataApi_Practice.Data;
+using policeDataApi_Practice.Models;
 using policeDataApi_Practice.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,6 +16,7 @@ namespace policeDataApi_Practice.Controllers
     {
 
         private readonly IStreetLevelCrimesRepo _crimesRepo;
+        private StreetLevelCrimesModel[] _streetLevelCrimes;
 
         public FilterStreetCrimes(IStreetLevelCrimesRepo crimesRepo)
         {
@@ -35,7 +37,12 @@ namespace policeDataApi_Practice.Controllers
 
             if (streetLevelResultsByDate != null)
             {
-                return Ok(streetLevelResultsByDate);
+                SelectStreetCrimeDateViewModel crimes = new SelectStreetCrimeDateViewModel();
+                crimes.Crimes = streetLevelResultsByDate;
+                crimes.CrimesLoaded = true;
+                crimes.Month = model.Month;
+                crimes.Year = model.Year;
+                return View(crimes);
             }
 
             return NotFound();

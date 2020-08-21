@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using policeDataApi_Practice.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace policeDataApi_Practice.ViewModels
         public string Year { get; set; }
         public List<SelectListItem> Years { get; set; }
         public List<SelectListItem> Months { get; set; }
+        public StreetLevelCrimesModel[] Crimes { get; set; }
+        public bool CrimesLoaded { get; set; }
     }
 }
