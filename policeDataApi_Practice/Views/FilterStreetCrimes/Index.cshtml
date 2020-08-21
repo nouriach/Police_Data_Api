@@ -1,0 +1,20 @@
+﻿@model policeDataApi_Practice.ViewModels.SelectStreetCrimeDateViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Search for Crimes</h1>
+
+<form asp-controller="FilterStreetCrimes" asp-action="Index" method="post">
+
+    <select asp-for="Month" asp-items="Model.Months">
+        <option>Please select one</option>
+    </select>
+    <select asp-for="Year" asp-items="Model.Years">
+        <option>Please select one</option>
+    </select>
+
+    <input type="submit" />
+
+</form>

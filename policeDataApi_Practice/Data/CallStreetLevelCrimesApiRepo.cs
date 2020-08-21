@@ -84,8 +84,10 @@ namespace policeDataApi_Practice.Data
             }
         }
 
-        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime(string date)
+        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime(string month, string year)
         {
+            var date = $"{year}-{month}";
+
             var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&{_defaultLocation}");
             var client = _clientFactory.CreateClient("street-level-all-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
