@@ -29,6 +29,8 @@ namespace policeDataApi_Practice.Controllers
 
         // -- GET api/streetcrime
         [HttpGet]
+        [Route("GetAllStreetCrimes")]
+
         public async Task <ActionResult<StreetLevelCrimesModel[]>> GetAllStreetCrimes()
         {
             var streetLevelResults = await _crimesRepo.GetAllStreetLevelCrimesByLocation();
