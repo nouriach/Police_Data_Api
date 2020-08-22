@@ -23,6 +23,7 @@ namespace policeDataApi_Practice.Controllers
             _crimesRepo = crimesRepo;
         }
 
+
         public IActionResult Index()
         {
             var filterCrimesViewModel = GetMonthsAndYears();
@@ -30,7 +31,7 @@ namespace policeDataApi_Practice.Controllers
             return View(filterCrimesViewModel);
         }
 
-        [HttpPost]
+       [HttpPost]
         public async Task<IActionResult> Index(SelectStreetCrimeDateViewModel model)
         {
             var streetLevelResultsByDate = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndTime(model.Month, model.Year);
@@ -58,7 +59,14 @@ namespace policeDataApi_Practice.Controllers
                new SelectListItem { Text = "February", Value = "02" },
                new SelectListItem { Text = "March", Value =  "03" },
                new SelectListItem { Text = "April", Value = "04" },
-               new SelectListItem { Text = "May", Value ="05" }
+               new SelectListItem { Text = "May", Value ="05" },
+               new SelectListItem { Text = "June", Value = "06" },
+               new SelectListItem { Text = "July", Value = "07" },
+               new SelectListItem { Text = "August", Value =  "08" },
+               new SelectListItem { Text = "September", Value = "09" },
+               new SelectListItem { Text = "October", Value ="10" },
+               new SelectListItem { Text = "November", Value =  "11" },
+               new SelectListItem { Text = "December", Value = "12" },
             };
 
             getDates.Years = new List<SelectListItem>
@@ -66,7 +74,11 @@ namespace policeDataApi_Practice.Controllers
                new SelectListItem { Text = "2020", Value = "2020" },
                new SelectListItem { Text = "2019", Value = "2019" },
                new SelectListItem { Text = "2018", Value =  "2018" },
-               new SelectListItem { Text = "2017", Value = "2017" }
+               new SelectListItem { Text = "2017", Value = "2017" },
+               new SelectListItem { Text = "2016", Value = "2016" },
+               new SelectListItem { Text = "2015", Value = "2015" },
+               new SelectListItem { Text = "2014", Value =  "2014" },
+               new SelectListItem { Text = "2013", Value = "2013" }
             };
 
             return getDates;

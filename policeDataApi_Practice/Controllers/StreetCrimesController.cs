@@ -31,7 +31,7 @@ namespace policeDataApi_Practice.Controllers
         [HttpGet]
         [Route("GetAllStreetCrimes")]
 
-        public async Task <ActionResult<StreetLevelCrimesModel[]>> GetAllStreetCrimes()
+        public async Task<ActionResult<StreetLevelCrimesModel[]>> GetAllStreetCrimes()
         {
             var streetLevelResults = await _crimesRepo.GetAllStreetLevelCrimesByLocation();
 

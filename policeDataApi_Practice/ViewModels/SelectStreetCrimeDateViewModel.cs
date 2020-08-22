@@ -11,6 +11,8 @@ namespace policeDataApi_Practice.ViewModels
     {
         public string Month { get; set; }
         public string Year { get; set; }
+        public Postcode Postcode { get; set; }
+
         public List<SelectListItem> Years { get; set; }
         public List<SelectListItem> Months { get; set; }
         public StreetLevelCrimesModel[] Crimes { get; set; }

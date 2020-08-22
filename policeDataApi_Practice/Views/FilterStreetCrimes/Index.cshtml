@@ -25,13 +25,20 @@
     else
     {
         <form asp-controller="FilterStreetCrimes" asp-action="Index" method="post">
-
-            <select asp-for="Month" asp-items="Model.Months">
-                <option>Please select one</option>
-            </select>
-            <select asp-for="Year" asp-items="Model.Years">
-                <option>Please select one</option>
-            </select>
+            <div>
+                <label for="latitude">Latitude:</label>
+                <input class="form-control" name="latitude" />
+                <label for="longitude">Longitude:</label>
+                <input class="form-control" name="longitude" />
+            </div>
+            <div>
+                <select asp-for="Month" asp-items="Model.Months">
+                    <option>Please select one</option>
+                </select>
+                <select asp-for="Year" asp-items="Model.Years">
+                    <option>Please select one</option>
+                </select>
+            </div>
 
             <input type="submit" />
 
