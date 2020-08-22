@@ -26,10 +26,10 @@
     {
         <form asp-controller="FilterStreetCrimes" asp-action="Index" method="post">
             <div>
-                <label for="latitude">Latitude:</label>
-                <input class="form-control" name="latitude" />
-                <label for="longitude">Longitude:</label>
-                <input class="form-control" name="longitude" />
+                <label asp-for="PostcodePartOne"></label>
+                <input class="form-control" asp-for="PostcodePartOne" />
+                <label asp-for="PostcodePartTwo"></label>
+                <input class="form-control" asp-for="PostcodePartTwo"/>
             </div>
             <div>
                 <select asp-for="Month" asp-items="Model.Months">

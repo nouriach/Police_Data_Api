@@ -34,16 +34,11 @@ namespace policeDataApi_Practice.Controllers
        [HttpPost]
         public async Task<IActionResult> Index(SelectStreetCrimeDateViewModel model)
         {
-            var streetLevelResultsByDate = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndTime(model.Month, model.Year);
+            var streetLevelResultsByDate = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndTime(model.Month, model.Year, model.PostcodePartOne, model.PostcodePartTwo);
 
             if (streetLevelResultsByDate != null)
             {
-                SelectStreetCrimeDateViewModel crimes = new SelectStreetCrimeDateViewModel();
-                crimes.Crimes = streetLevelResultsByDate;
-                crimes.CrimesLoaded = true;
-                crimes.Month = model.Month;
-                crimes.Year = model.Year;
-                return View(crimes);
+                return View(streetLevelResultsByDate);
             }
 
             return NotFound();

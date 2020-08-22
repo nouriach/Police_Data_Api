@@ -43,6 +43,11 @@ namespace policeDataApi_Practice
                 slc.BaseAddress = new Uri(Configuration.GetValue<string>("StreetLevelOutcomesAPI"));
             });
 
+            services.AddHttpClient("lookup-postcode", slc =>
+            {
+                slc.BaseAddress = new Uri(Configuration.GetValue<string>("LookUpPostcodeAPI"));
+            });
+
 
             services.AddScoped<IStreetLevelCrimesRepo, CallStreetLevelCrimesApiRepo>();
             services.AddScoped<IStreetLevelOutcomesRepo, CallStreetLevelOutcomesApiRepo>();

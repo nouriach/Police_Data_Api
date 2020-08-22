@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Text.Json;
+using policeDataApi_Practice.ViewModels;
 
 namespace policeDataApi_Practice.Data
 {
@@ -14,6 +15,7 @@ namespace policeDataApi_Practice.Data
     {
         private readonly IHttpClientFactory _clientFactory;
         private StreetLevelCrimesModel[] _streetLevelCrimes;
+        private Postcode _postcode;
         // placeholder longitude and latitude, it works in postman
         private readonly string _defaultLocation = "lat=52.629729&lng=-1.131592";
 
@@ -85,20 +87,36 @@ namespace policeDataApi_Practice.Data
             }
         }
 
-        public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocationAndTime(string month, string year)
+        public async Task<SelectStreetCrimeDateViewModel> GetAllStreetLevelCrimesByLocationAndTime(string month, string year, string postcodeOutcode, string postcodeIncode)
         {
             var date = $"{year}-{month}";
+
+            HttpRequestMessage postcodeRequest = new HttpRequestMessage(HttpMethod.Get, $"{postcodeOutcode}+{ postcodeIncode}");
+            HttpClient postcodeClient = _clientFactory.CreateClient("lookup-postcode");
+            var response = await postcodeClient.SendAsync(postcodeRequest);
 
             var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&{_defaultLocation}");
             var client = _clientFactory.CreateClient("street-level-all-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
-            if (resp.IsSuccessStatusCode)
+            if (resp.IsSuccessStatusCode && response.IsSuccessStatusCode)
             {
+                var dateJsonString = await response.Content.ReadAsStringAsync();
+                _postcode = System.Text.Json.JsonSerializer.Deserialize<Postcode>(dateJsonString);
+
                 var jsonString = await resp.Content.ReadAsStringAsync();
                 _streetLevelCrimes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
 
-                return _streetLevelCrimes;
+                SelectStreetCrimeDateViewModel viewModel = new SelectStreetCrimeDateViewModel
+                {
+                    Crimes = _streetLevelCrimes,
+                    Postcode = _postcode,
+                    Month = month,
+                    Year = year,
+                    CrimesLoaded = true
+                };
+
+                return viewModel;
             }
             else
             {
