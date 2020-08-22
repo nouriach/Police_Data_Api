@@ -14,10 +14,26 @@ namespace policeDataApi_Practice.ViewModels
         public Postcode Postcode { get; set; }
         public string PostcodePartOne { get; set; }
         public string PostcodePartTwo { get; set; }
-
+        public List<string> Categories { get; set; }
         public List<SelectListItem> Years { get; set; }
         public List<SelectListItem> Months { get; set; }
         public StreetLevelCrimesModel[] Crimes { get; set; }
         public bool CrimesLoaded { get; set; }
+        //private List<string> GetTotalUniqueCategories()
+        //{
+        //    if (Crimes.Count() > 0)
+        //    {
+        //        var categories = new List<string>();
+        //        foreach (var cat in Crimes)
+        //        {
+        //            categories.Add(cat.category);
+        //        }
+        //        return categories.Distinct().ToList();
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
     }
 }

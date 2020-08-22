@@ -76,6 +76,8 @@ namespace policeDataApi_Practice.Controllers
                new SelectListItem { Text = "2013", Value = "2013" }
             };
 
+            getDates.CrimesLoaded = false;
+
             return getDates;
         }
     }

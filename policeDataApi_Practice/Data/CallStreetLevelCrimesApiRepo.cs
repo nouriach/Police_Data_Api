@@ -24,7 +24,6 @@ namespace policeDataApi_Practice.Data
         {
             _clientFactory = clientFactory;
         }
-        //53.47925,-2.21841
 
         public async Task<StreetLevelCrimesModel[]> GetAllStreetLevelCrimesByLocation()
         {
@@ -89,32 +88,45 @@ namespace policeDataApi_Practice.Data
 
         public async Task<SelectStreetCrimeDateViewModel> GetAllStreetLevelCrimesByLocationAndTime(string month, string year, string postcodeOutcode, string postcodeIncode)
         {
-            var date = $"{year}-{month}";
 
-            HttpRequestMessage postcodeRequest = new HttpRequestMessage(HttpMethod.Get, $"{postcodeOutcode}+{ postcodeIncode}");
-            HttpClient postcodeClient = _clientFactory.CreateClient("lookup-postcode");
-            var response = await postcodeClient.SendAsync(postcodeRequest);
+            if (postcodeOutcode != null && postcodeIncode != null)
+            {
+                HttpRequestMessage postcodeRequest = new HttpRequestMessage(HttpMethod.Get, $"{postcodeOutcode}+{ postcodeIncode}");
+                HttpClient postcodeClient = _clientFactory.CreateClient("lookup-postcode");
+                var response = await postcodeClient.SendAsync(postcodeRequest);
 
-            var request = new HttpRequestMessage(HttpMethod.Get, $"?date={date}&{_defaultLocation}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var dateJsonString = await response.Content.ReadAsStringAsync();
+                    _postcode = System.Text.Json.JsonSerializer.Deserialize<Postcode>(dateJsonString);
+                }
+            }
+
+            var request = new HttpRequestMessage(HttpMethod.Get, $"?date={year}-{month}&lat={_postcode.data.latitude}&lng={_postcode.data.longitude}");
             var client = _clientFactory.CreateClient("street-level-all-crimes");
             HttpResponseMessage resp = await client.SendAsync(request);
 
-            if (resp.IsSuccessStatusCode && response.IsSuccessStatusCode)
+            if (resp.IsSuccessStatusCode)
             {
-                var dateJsonString = await response.Content.ReadAsStringAsync();
-                _postcode = System.Text.Json.JsonSerializer.Deserialize<Postcode>(dateJsonString);
 
                 var jsonString = await resp.Content.ReadAsStringAsync();
                 _streetLevelCrimes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
 
+                var categories = new List<string>();
+                foreach (var cat in _streetLevelCrimes)
+                {
+                    categories.Add(cat.category);
+                }
+                
                 SelectStreetCrimeDateViewModel viewModel = new SelectStreetCrimeDateViewModel
                 {
                     Crimes = _streetLevelCrimes,
                     Postcode = _postcode,
                     Month = month,
                     Year = year,
-                    CrimesLoaded = true
-                };
+                    CrimesLoaded = true,
+                    Categories = categories.Distinct().ToList()
+            };
 
                 return viewModel;
             }
