@@ -26,7 +26,7 @@
                                 {
                                     if (category.url.ToString() == item.ToString())
                                     {
-                                        <p>@category.name.ToString()</p>
+                                        <p>@category.name.ToString() <span>(@Model.Crimes.Where(x => x.category == @item).Count())</span></p>
                                     }
                                 }
                             </button>
