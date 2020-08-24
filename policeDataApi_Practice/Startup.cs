@@ -51,10 +51,15 @@ namespace policeDataApi_Practice
             {
                 slc.BaseAddress = new Uri(Configuration.GetValue<string>("LookUpCategories"));
             });
+            services.AddHttpClient("base-police-api-call", slc =>
+            {
+                slc.BaseAddress = new Uri(Configuration.GetValue<string>("BasePoliceDataAPI"));
+            });
+            // BasePoliceDataAPI
 
-            
             services.AddScoped<IStreetLevelCrimesRepo, CallStreetLevelCrimesApiRepo>();
             services.AddScoped<IStreetLevelOutcomesRepo, CallStreetLevelOutcomesApiRepo>();
+            services.AddScoped<IYourNeighbourhoodRepo, CallNeighbourhoodApiRepo>();
 
         }
 

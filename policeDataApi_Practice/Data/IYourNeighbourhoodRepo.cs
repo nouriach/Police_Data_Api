@@ -8,6 +8,6 @@ namespace policeDataApi_Practice.Data
 {
     public interface IYourNeighbourhoodRepo
     {
-        Task<DisplayLocalNeighbourhoodViewModel> GetNeighbourhoodLocation();
+        Task<DisplayLocalNeighbourhoodViewModel> GetNeighbourhoodLocation(string postcodeIncode, string postcodeOutcode);
     }
 }

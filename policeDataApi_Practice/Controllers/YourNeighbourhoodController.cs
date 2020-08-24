@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using policeDataApi_Practice.Data;
 using policeDataApi_Practice.ViewModels;
 
 namespace policeDataApi_Practice.Controllers
 {
     public class YourNeighbourhoodController : Controller
     {
+        private IYourNeighbourhoodRepo _neighbourhoodRepo;
+
+        public YourNeighbourhoodController(IYourNeighbourhoodRepo neighbourhoodRepo)
+        {
+            _neighbourhoodRepo = neighbourhoodRepo;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -16,21 +24,18 @@ namespace policeDataApi_Practice.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(DisplayLocalNeighbourhoodViewModel model)
+        public async Task<IActionResult> Index(DisplayLocalNeighbourhoodViewModel model)
         {
+            var neighbourhood = await _neighbourhoodRepo.GetNeighbourhoodLocation(model.PostcodeIncode, model.PostcodeOutcode);
 
-
-
-            /*
-            var streetLevelResultsByDate = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndTime(model.PostcodePartOne, model.PostcodePartTwo);
-            streetLevelResultsByDate.AllCategories = await _crimesRepo.GetAllCategories();
-            if (streetLevelResultsByDate != null)
+            if (neighbourhood != null)
             {
-                return View(streetLevelResultsByDate);
+                return View();
             }
-
-            return NotFound();
-            */
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
