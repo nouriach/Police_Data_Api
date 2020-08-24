@@ -1,16 +1,16 @@
-﻿
+﻿@model policeDataApi_Practice.ViewModels.DisplayLocalNeighbourhoodViewModel;
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Enter Postcode to Find Your Local Neighbourhood Info</h1>
 
 <form asp-controller="YourNeighbourhood" asp-action="Index" method="post">
     <div>
-        <label asp-for="#"></label>
-        <input class="form-control" asp-for="#" />
-        <label asp-for="#"></label>
-        <input class="form-control" asp-for="#" />
+        <label asp-for="PostcodeIncode"></label>
+        <input class="form-control" asp-for="PostcodeIncode" />
+        <label asp-for="PostcodeOutcode"></label>
+        <input class="form-control" asp-for="PostcodeOutcode" />
     </div>
 
     <input type="submit" />

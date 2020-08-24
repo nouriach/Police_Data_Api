@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using policeDataApi_Practice.ViewModels;
 
 namespace policeDataApi_Practice.Controllers
 {
@@ -15,7 +16,7 @@ namespace policeDataApi_Practice.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index()
+        public IActionResult Index(DisplayLocalNeighbourhoodViewModel model)
         {
             return View();
         }
