@@ -1,4 +1,5 @@
 ﻿using policeDataApi_Practice.Models;
+using policeDataApi_Practice.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,7 @@ namespace policeDataApi_Practice.Data
 
         IEnumerable<StreetLevelOutcomesModel> GetAllStreetLevelOutcomesByLocation();
 
-        IEnumerable<StreetLevelOutcomesModel> GetAllStreetLevelOutcomesByLocationAndTime();
-
+        Task<DisplayStreetCrimeOutViewModel> GetAllStreetLevelOutcomesByLocationAndTime(int crimeId, string date, string latitude, string longitude);
 
     }
 }
