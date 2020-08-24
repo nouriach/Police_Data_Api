@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using policeDataApi_Practice.Models;
+using policeDataApi_Practice.ViewModels;
 
 namespace policeDataApi_Practice.Controllers
 {
@@ -20,6 +22,13 @@ namespace policeDataApi_Practice.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(SelectStreetCrimeDateViewModel model)
+        {
+
             return View();
         }
 

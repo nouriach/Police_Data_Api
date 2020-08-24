@@ -29,7 +29,9 @@ namespace policeDataApi_Practice.Controllers
 
         // -- GET api/streetcrime
         [HttpGet]
-        public async Task <ActionResult<StreetLevelCrimesModel[]>> GetAllStreetCrimes()
+        [Route("GetAllStreetCrimes")]
+
+        public async Task<ActionResult<StreetLevelCrimesModel[]>> GetAllStreetCrimes()
         {
             var streetLevelResults = await _crimesRepo.GetAllStreetLevelCrimesByLocation();
 
@@ -79,7 +81,7 @@ namespace policeDataApi_Practice.Controllers
         public async Task <ActionResult<StreetLevelCrimesModel[]>> GetStreetCrimeByLocationAndDate(string date)
         {
             // PLACEHOLDER DATE needs to be YYYY-MM, '2019-01' works in Postman
-            var streetLevelResultsByDate = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndTime(date);
+            var streetLevelResultsByDate = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndTime(date, null, null, null);
 
             if (streetLevelResultsByDate != null)
             {

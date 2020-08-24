@@ -1,0 +1,82 @@
+﻿@model policeDataApi_Practice.ViewModels.SelectStreetCrimeDateViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Search for Crimes</h1>
+
+
+@{ 
+    if (Model.CrimesLoaded == true)
+    {
+        <div>
+            <div>
+                <h2>Crimes for @Model.Month, @Model.Year</h2>
+                <h4>Total Crimes in @Model.Postcode.data.postcode Area Over Selected Period: @Model.Crimes.Count()</h4>
+            </div>
+            <div id="accordion">
+                @foreach (var item in Model.FilteredCategories)
+                {
+                <div class="card">
+                    <div class="card-header" id="heading-@Model.FilteredCategories.IndexOf(@item)">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-@Model.FilteredCategories.IndexOf(@item)" aria-expanded="true" aria-controls="collapse-@Model.FilteredCategories.IndexOf(@item)">
+                                @foreach (var category in Model.AllCategories)
+                                {
+                                    if (category.url.ToString() == item.ToString())
+                                    {
+                                        <p>@category.name.ToString() <span>(@Model.Crimes.Where(x => x.category == @item).Count())</span></p>
+                                    }
+                                }
+                            </button>
+                        </h5>
+                    </div>
+                    @foreach (var crime in Model.Crimes)
+                    {
+                        if (crime.category == @item)
+                        {
+                            <div  id="collapse-@Model.FilteredCategories.IndexOf(@item)" class="collapse" aria-labelledby="heading-@Model.FilteredCategories.IndexOf(@item)" data-parent="#accordion">
+                                <div class="card-body">
+                                    <p>@crime.location.street.name</p>
+                                    <h6>
+                                        <a asp-controller="StreetCrimesOutcome" asp-action="StreetCrimeOutcome" 
+                                           asp-route-crimeId="@crime.id" 
+                                           asp-route-latitude="@crime.location.latitude"
+                                           asp-route-longitude="@crime.location.longitude"
+                                           asp-route-date="@crime.month">More Details
+                                        </a>
+                                    </h6>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+
+                }
+            </div>
+        </div>
+    }
+        else
+        {
+        <form asp-controller="FilterStreetCrimes" asp-action="Index" method="post">
+            <div>
+                <label asp-for="PostcodePartOne"></label>
+                <input class="form-control" asp-for="PostcodePartOne" />
+                <label asp-for="PostcodePartTwo"></label>
+                <input class="form-control" asp-for="PostcodePartTwo" />
+            </div>
+            <div>
+                <select asp-for="Month" asp-items="Model.Months">
+                    <option>Please select one</option>
+                </select>
+                <select asp-for="Year" asp-items="Model.Years">
+                    <option>Please select one</option>
+                </select>
+            </div>
+
+            <input type="submit" />
+
+        </form>
+        }
+    }

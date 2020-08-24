@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form>
+    <div class="form-group">
+        <label>Select a month</label>
+        <select class="form-control" >
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Select a year</label>
+        <select class="form-control">
+            <option>2020</option>
+            <option>2019</option>
+            <option>2018</option>
+            <option>2017</option>
+            <option>2016</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" asp-controller="StreetCrimes" asp-action="GetStreetCrimeByLocationAndDate">Submit</button>
+    </div>
+</form>
+
