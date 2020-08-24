@@ -16,13 +16,19 @@
                 <h4>Total Crimes in @Model.Postcode.data.postcode Area Over Selected Period: @Model.Crimes.Count()</h4>
             </div>
             <div id="accordion">
-                @foreach (var item in Model.Categories)
+                @foreach (var item in Model.FilteredCategories)
                 {
                 <div class="card">
-                    <div class="card-header" id="heading-@Model.Categories.IndexOf(@item)">
+                    <div class="card-header" id="heading-@Model.FilteredCategories.IndexOf(@item)">
                         <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-@Model.Categories.IndexOf(@item)" aria-expanded="true" aria-controls="collapse-@Model.Categories.IndexOf(@item)">
-                                @item
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-@Model.FilteredCategories.IndexOf(@item)" aria-expanded="true" aria-controls="collapse-@Model.FilteredCategories.IndexOf(@item)">
+                                @foreach (var category in Model.AllCategories)
+                                {
+                                    if (category.url.ToString() == item.ToString())
+                                    {
+                                        <p>@category.name.ToString()</p>
+                                    }
+                                }
                             </button>
                         </h5>
                     </div>
@@ -30,7 +36,7 @@
                     {
                         if (crime.category == @item)
                         {
-                            <div  id="collapse-@Model.Categories.IndexOf(@item)" class="collapse" aria-labelledby="heading-@Model.Categories.IndexOf(@item)" data-parent="#accordion">
+                            <div  id="collapse-@Model.FilteredCategories.IndexOf(@item)" class="collapse" aria-labelledby="heading-@Model.FilteredCategories.IndexOf(@item)" data-parent="#accordion">
                                 <div class="card-body">
                                     <p>@crime.location.street.name</p>
                                     <h6>

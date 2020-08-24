@@ -16,7 +16,6 @@ namespace policeDataApi_Practice.Controllers
     {
 
         private readonly IStreetLevelCrimesRepo _crimesRepo;
-        private StreetLevelCrimesModel[] _streetLevelCrimes;
 
         public FilterStreetCrimesController(IStreetLevelCrimesRepo crimesRepo)
         {
@@ -35,7 +34,7 @@ namespace policeDataApi_Practice.Controllers
         public async Task<IActionResult> Index(SelectStreetCrimeDateViewModel model)
         {
             var streetLevelResultsByDate = await _crimesRepo.GetAllStreetLevelCrimesByLocationAndTime(model.Month, model.Year, model.PostcodePartOne, model.PostcodePartTwo);
-
+            streetLevelResultsByDate.AllCategories = await _crimesRepo.GetAllCategories();
             if (streetLevelResultsByDate != null)
             {
                 return View(streetLevelResultsByDate);

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Text.Json;
 using policeDataApi_Practice.ViewModels;
+using static policeDataApi_Practice.Models.StreetLevelOutcomesModel;
 
 namespace policeDataApi_Practice.Data
 {
@@ -16,6 +17,8 @@ namespace policeDataApi_Practice.Data
         private readonly IHttpClientFactory _clientFactory;
         private StreetLevelCrimesModel[] _streetLevelCrimes;
         private Postcode _postcode;
+        private Category[] _categories;
+
         // placeholder longitude and latitude, it works in postman
         private readonly string _defaultLocation = "lat=52.629729&lng=-1.131592";
 
@@ -125,7 +128,7 @@ namespace policeDataApi_Practice.Data
                     Month = month,
                     Year = year,
                     CrimesLoaded = true,
-                    Categories = categories.Distinct().ToList()
+                    FilteredCategories = categories.Distinct().ToList()
             };
 
                 return viewModel;
@@ -148,6 +151,25 @@ namespace policeDataApi_Practice.Data
                 _streetLevelCrimes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelCrimesModel[]>(jsonString);
 
                 return _streetLevelCrimes;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<Category>> GetAllCategories()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "?");
+            var client = _clientFactory.CreateClient("lookup--crime-categories");
+            HttpResponseMessage resp = await client.SendAsync(request);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var jsonString = await resp.Content.ReadAsStringAsync();
+                _categories = System.Text.Json.JsonSerializer.Deserialize<Category[]>(jsonString);
+                var categoryList = _categories.ToList();
+                return categoryList;
             }
             else
             {

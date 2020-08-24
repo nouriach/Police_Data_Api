@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static policeDataApi_Practice.Models.StreetLevelOutcomesModel;
 
 namespace policeDataApi_Practice.ViewModels
 {
@@ -14,7 +15,8 @@ namespace policeDataApi_Practice.ViewModels
         public Postcode Postcode { get; set; }
         public string PostcodePartOne { get; set; }
         public string PostcodePartTwo { get; set; }
-        public List<string> Categories { get; set; }
+        public List<string> FilteredCategories { get; set; }
+        public List<Category> AllCategories { get; set; }
         public List<SelectListItem> Years { get; set; }
         public List<SelectListItem> Months { get; set; }
         public StreetLevelCrimesModel[] Crimes { get; set; }
