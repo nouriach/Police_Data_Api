@@ -8,6 +8,13 @@ namespace policeDataApi_Practice.Controllers
 {
     public class YourNeighbourhoodController : Controller
     {
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult Index()
         {
             return View();
