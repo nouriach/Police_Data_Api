@@ -12,5 +12,11 @@ namespace policeDataApi_Practice.Controllers
         {
             return View();
         }
+
+        public IActionResult StreetCrimeOutcome(int crimeId)
+        {
+            ViewBag.CrimeId = crimeId;
+            return View();
+        }
     }
 }
