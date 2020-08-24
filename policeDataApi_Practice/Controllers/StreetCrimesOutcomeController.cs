@@ -15,6 +15,7 @@ namespace policeDataApi_Practice.Controllers
 
         public IActionResult StreetCrimeOutcome(int crimeId, string date, string latitude, string longitude)
         {
+
             ViewBag.CrimeId = crimeId;
             return View();
         }
