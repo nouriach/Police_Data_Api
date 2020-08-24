@@ -34,7 +34,12 @@
                                 <div class="card-body">
                                     <p>@crime.location.street.name</p>
                                     <h6>
-                                        <a asp-controller="StreetCrimesOutcome" asp-action="StreetCrimeOutcome" asp-route-crimeId="@crime.id">More Details</a>
+                                        <a asp-controller="StreetCrimesOutcome" asp-action="StreetCrimeOutcome" 
+                                           asp-route-crimeId="@crime.id" 
+                                           asp-route-latitude="@crime.location.latitude"
+                                           asp-route-longitude="@crime.location.longitude"
+                                           asp-route-date="@crime.month">More Details
+                                        </a>
                                     </h6>
                                 </div>
                             </div>
