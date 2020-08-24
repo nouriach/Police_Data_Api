@@ -30,11 +30,10 @@ namespace policeDataApi_Practice.Data
                 _streetLevelCrimesOutcomes = System.Text.Json.JsonSerializer.Deserialize<StreetLevelOutcomesModel[]>(jsonString);
                 var list = _streetLevelCrimesOutcomes.ToList();
                 var result = list.Where(x => x.crime.id.ToString() == crimeId.ToString()).FirstOrDefault();
-                // var result = list.Where(x => x.crime.id.ToString() == "71266437").FirstOrDefault();
 
                 var viewModel = new DisplayStreetCrimeOutViewModel
                 {
-                    CrimeOutcomeLoaded = true,
+                    CrimeOutcomeLoaded = result == null ? false : true,
                     StreetLevelCrimeOutcome = result
                 };
 

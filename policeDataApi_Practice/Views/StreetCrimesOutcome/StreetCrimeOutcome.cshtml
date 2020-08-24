@@ -9,17 +9,21 @@
     if (Model.CrimeOutcomeLoaded == false)
     {
         <div>
-            <p>No data for this crime</p>
+            <p>No outcome data available for this crime</p>
         </div>
     }
     else
     {
         <div>
-            <p>Crime ID </p>
-            <p>Display Crime Name here</p>
-            <p>Display Crime Location here</p>
-            <p>Display Crime Time here</p>
-            <p>Display Crime Outcome here</p>
+            <h2> Crime Info </h2>
+            <p>Display Crime Name here: @Model.StreetLevelCrimeOutcome.category.name</p>
+            <p>Display Crime Location here: @Model.StreetLevelCrimeOutcome.crime.location.street.name</p>
+            <p>Display Crime Time here: @Model.StreetLevelCrimeOutcome.crime.month</p>
+        </div>
+        <div>
+            <h2> Crime Outcome </h2>
+            <p>Date of Outcome: @Model.StreetLevelCrimeOutcome.date</p>
+            <p>Display Crime Outcome here: <span>@Model.StreetLevelCrimeOutcome.category.name </span></p>
         </div>
     }
 }

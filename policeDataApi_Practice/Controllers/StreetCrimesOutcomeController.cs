@@ -24,7 +24,7 @@ namespace policeDataApi_Practice.Controllers
         {
             var streetLevelCrimeOutcome = await _streetLevelCrimeOutcomes.GetAllStreetLevelOutcomesByLocationAndTime(crimeId, date, latitude, longitude);
 
-            if (streetLevelCrimeOutcome.StreetLevelCrimeOutcome != null)
+            if (streetLevelCrimeOutcome != null)
             {
 
                 return View(streetLevelCrimeOutcome);
