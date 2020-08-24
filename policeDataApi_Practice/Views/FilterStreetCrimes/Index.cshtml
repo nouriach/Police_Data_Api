@@ -33,7 +33,9 @@
                             <div  id="collapse-@Model.Categories.IndexOf(@item)" class="collapse" aria-labelledby="heading-@Model.Categories.IndexOf(@item)" data-parent="#accordion">
                                 <div class="card-body">
                                     <p>@crime.location.street.name</p>
-                                    <p>More Details</p>
+                                    <h6>
+                                        <a asp-controller="StreetCrimesOutcome" asp-action="#" asp-route-crimeId="#">More Details</a>
+                                    </h6>
                                 </div>
                             </div>
                         }

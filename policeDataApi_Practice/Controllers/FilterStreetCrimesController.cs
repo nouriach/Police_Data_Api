@@ -12,13 +12,13 @@ using policeDataApi_Practice.ViewModels;
 
 namespace policeDataApi_Practice.Controllers
 {
-    public class FilterStreetCrimes : Controller
+    public class FilterStreetCrimesController : Controller
     {
 
         private readonly IStreetLevelCrimesRepo _crimesRepo;
         private StreetLevelCrimesModel[] _streetLevelCrimes;
 
-        public FilterStreetCrimes(IStreetLevelCrimesRepo crimesRepo)
+        public FilterStreetCrimesController(IStreetLevelCrimesRepo crimesRepo)
         {
             _crimesRepo = crimesRepo;
         }
