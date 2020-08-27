@@ -15,7 +15,11 @@
         }
         <p>Neighbourhood Details: @Model.NeighbourhoodDetails.name</p>
         <p>Neighbourhood Population: @Model.NeighbourhoodDetails.population</p>
-
+        <p>Neighbourhood Priorities</p>
+        @foreach (var priority in Model.NeighbourhoodPriorities)
+        {
+            <p>@priority.issue</p>
+        }
     }
     else
     {

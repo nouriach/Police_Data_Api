@@ -40,6 +40,11 @@ namespace policeDataApi_Practice.Controllers
                 neighbourhood.LocateNeighbourhood.force,
                 neighbourhood.LocateNeighbourhood.neighbourhood);
 
+            neighbourhood.NeighbourhoodPriorities = await _neighbourhoodRepo.GetNeighbourhoodPriorities(
+                neighbourhood.LocateNeighbourhood.force,
+                neighbourhood.LocateNeighbourhood.neighbourhood
+                );
+
             if (neighbourhood != null)
             {
                 return View(neighbourhood);

@@ -16,11 +16,35 @@ namespace policeDataApi_Practice.Data
         private LocateNeighbourhood _locateNeighbourhood;
         private NeighbourhoodTeam[] _neighbourhoodTeam;
         private LocateSpecificNeighbourhood _neighbourhoodDetails;
+        private NeighbourhoodPriorities[] _neighbourhoodPriorities;
 
         public CallNeighbourhoodApiRepo(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
 
+        }
+
+        public async Task<NeighbourhoodPriorities[]> GetNeighbourhoodPriorities(string location, string force)
+        {
+            if (location != null && force != null)
+            {
+                var req = new HttpRequestMessage(HttpMethod.Get, $"{location}/{force}/priorities");
+                var client = _clientFactory.CreateClient("base-police-api-call");
+                HttpResponseMessage resp = await client.SendAsync(req);
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    var jsonString = await resp.Content.ReadAsStringAsync();
+                    _neighbourhoodPriorities = System.Text.Json.JsonSerializer.Deserialize<NeighbourhoodPriorities[]>(jsonString);
+                    return _neighbourhoodPriorities;
+                }
+
+                return null;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<LocateSpecificNeighbourhood> GetNeighbourhoodDetails(string location, string force)

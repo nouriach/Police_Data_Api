@@ -11,6 +11,7 @@ namespace policeDataApi_Practice.ViewModels
         public LocateNeighbourhood LocateNeighbourhood { get; set; }
         public NeighbourhoodTeam[] NeighbourhoodTeam { get; set; }
         public LocateSpecificNeighbourhood NeighbourhoodDetails { get; set; }
+        public NeighbourhoodPriorities[] NeighbourhoodPriorities { get; set; }
         public string PostcodeIncode { get; set; }
         public string PostcodeOutcode { get; set; }
         public bool NeighbourhoodLoaded { get; set; }
