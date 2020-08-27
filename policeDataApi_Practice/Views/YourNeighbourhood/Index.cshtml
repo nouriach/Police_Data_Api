@@ -7,19 +7,69 @@
 
     if (Model.NeighbourhoodLoaded != false)
     {
-        <h1>Your Neighbourhood</h1>
-        <p>Force: <span>@Model.LocateNeighbourhood.force</span></p>
-        @foreach (var member in Model.NeighbourhoodTeam)
-        {
-            <p>@member.name</p>
-        }
-        <p>Neighbourhood Details: @Model.NeighbourhoodDetails.name</p>
-        <p>Neighbourhood Population: @Model.NeighbourhoodDetails.population</p>
-        <p>Neighbourhood Priorities</p>
-        @foreach (var priority in Model.NeighbourhoodPriorities)
-        {
-            <p>@priority.issue</p>
-        }
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">@Model.NeighbourhoodDetails.name</h1>
+                <p class="lead">@Model.NeighbourhoodDetails.description</p>
+            </div>
+        </div>
+
+        <div>
+            <h1>Your Neighbourhood Team</h1>
+            <div class="d-flex flex-wrap">
+
+                @foreach (var member in Model.NeighbourhoodTeam)
+                {
+                    <div class="card p-2">
+                        <img class="card-img-top" src="https://via.placeholder.com/150" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title"> @member.rank</h5>
+                            <p class="card-text"> @member.name</p>
+                            <p class="card-text"><small class="text-muted">@member.bio</small></p>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+        <div>
+            <p>Neighbourhood Priorities</p>
+            <div id="accordion">
+                @if  (Model.NeighbourhoodPriorities != null)
+                {
+                    @foreach (var priority in Model.NeighbourhoodPriorities)
+                    {
+                        <div class="card">
+                            <div class="card-header" id="heading-">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-@Model.NeighbourhoodPriorities.IndexOf(@priority)" aria-expanded="true" aria-controls="collapse-@Model.NeighbourhoodPriorities.IndexOf(@priority)">
+                                        Priority #<span>{ @Model.NeighbourhoodPriorities.IndexOf(@priority)++} </span> 
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapse-@Model.NeighbourhoodPriorities.IndexOf(@priority)" class="collapse" aria-labelledby="heading-@Model.NeighbourhoodPriorities.IndexOf(@priority)" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div>
+                                        <h3>Issue</h3>
+                                        <h6>Issue Date: @priority.issuedate</h6>
+                                        <p>@priority.issue</p>
+                                    </div>
+                                    <div>
+                                        <h3>Action</h3>
+                                        <h6>Action Date: @priority.actiondate</h6>
+                                        <p>@priority.action </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+</div>
+        </div>
     }
     else
     {

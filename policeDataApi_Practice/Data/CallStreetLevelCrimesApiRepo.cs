@@ -94,7 +94,7 @@ namespace policeDataApi_Practice.Data
 
             if (postcodeOutcode != null && postcodeIncode != null)
             {
-                HttpRequestMessage postcodeRequest = new HttpRequestMessage(HttpMethod.Get, $"{postcodeOutcode}+{ postcodeIncode}");
+                HttpRequestMessage postcodeRequest = new HttpRequestMessage(HttpMethod.Get, $"{postcodeOutcode.Trim()}+{ postcodeIncode.Trim()}");
                 HttpClient postcodeClient = _clientFactory.CreateClient("lookup-postcode");
                 var response = await postcodeClient.SendAsync(postcodeRequest);
 

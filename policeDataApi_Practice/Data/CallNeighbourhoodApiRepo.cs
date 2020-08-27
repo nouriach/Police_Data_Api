@@ -16,7 +16,7 @@ namespace policeDataApi_Practice.Data
         private LocateNeighbourhood _locateNeighbourhood;
         private NeighbourhoodTeam[] _neighbourhoodTeam;
         private LocateSpecificNeighbourhood _neighbourhoodDetails;
-        private NeighbourhoodPriorities[] _neighbourhoodPriorities;
+        private List<NeighbourhoodPriorities> _neighbourhoodPriorities;
 
         public CallNeighbourhoodApiRepo(IHttpClientFactory clientFactory)
         {
@@ -24,7 +24,7 @@ namespace policeDataApi_Practice.Data
 
         }
 
-        public async Task<NeighbourhoodPriorities[]> GetNeighbourhoodPriorities(string location, string force)
+        public async Task<List<NeighbourhoodPriorities>> GetNeighbourhoodPriorities(string location, string force)
         {
             if (location != null && force != null)
             {
@@ -34,8 +34,11 @@ namespace policeDataApi_Practice.Data
 
                 if (resp.IsSuccessStatusCode)
                 {
+                    char[] Chars = { '<', '>', '\'', '/' };
                     var jsonString = await resp.Content.ReadAsStringAsync();
-                    _neighbourhoodPriorities = System.Text.Json.JsonSerializer.Deserialize<NeighbourhoodPriorities[]>(jsonString);
+                    var neighbourhoodPrioritiesList = System.Text.Json.JsonSerializer.Deserialize<NeighbourhoodPriorities[]>(jsonString.Trim(Chars));
+
+                    _neighbourhoodPriorities = neighbourhoodPrioritiesList.ToList();
                     return _neighbourhoodPriorities;
                 }
 
@@ -74,7 +77,7 @@ namespace policeDataApi_Practice.Data
         {
             if (postcodeOutcode != null && postcodeIncode != null)
             {
-                var reqPostcode = new HttpRequestMessage(HttpMethod.Get, $"{ postcodeIncode}+{postcodeOutcode}");
+                var reqPostcode = new HttpRequestMessage(HttpMethod.Get, $"{ postcodeIncode.Trim()}+{postcodeOutcode.Trim()}");
                 var client = _clientFactory.CreateClient("lookup-postcode");
                 HttpResponseMessage resp = await client.SendAsync(reqPostcode);
 
