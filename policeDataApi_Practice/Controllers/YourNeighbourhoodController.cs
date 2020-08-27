@@ -20,17 +20,24 @@ namespace policeDataApi_Practice.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new DisplayLocalNeighbourhoodViewModel
+            {
+                NeighbourhoodLoaded = false
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(DisplayLocalNeighbourhoodViewModel model)
         {
             var neighbourhood = await _neighbourhoodRepo.GetNeighbourhoodLocation(model.PostcodeIncode, model.PostcodeOutcode);
+            neighbourhood.NeighbourhoodTeam = await _neighbourhoodRepo.GetNeighbourhoodTeam(
+                neighbourhood.LocateNeighbourhood.force, 
+                neighbourhood.LocateNeighbourhood.neighbourhood);
 
             if (neighbourhood != null)
             {
-                return View();
+                return View(neighbourhood);
             }
             else
             {

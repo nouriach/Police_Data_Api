@@ -3,16 +3,31 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Enter Postcode to Find Your Local Neighbourhood Info</h1>
+@{ 
 
-<form asp-controller="YourNeighbourhood" asp-action="Index" method="post">
-    <div>
-        <label asp-for="PostcodeIncode"></label>
-        <input class="form-control" asp-for="PostcodeIncode" />
-        <label asp-for="PostcodeOutcode"></label>
-        <input class="form-control" asp-for="PostcodeOutcode" />
-    </div>
+    if (Model.NeighbourhoodLoaded != false)
+    {
+        <h1>Your Neighbourhood</h1>
+        <p>Force: <span>@Model.LocateNeighbourhood.force</span></p>
+        @foreach (var member in Model.NeighbourhoodTeam)
+        {
+            <p>@member.name</p>
+        }
+    }
+    else
+    {
+        <h1>Enter Postcode to Find Your Local Neighbourhood Info</h1>
 
-    <input type="submit" />
+        <form asp-controller="YourNeighbourhood" asp-action="Index" method="post">
+            <div>
+                <label asp-for="PostcodeIncode"></label>
+                <input class="form-control" asp-for="PostcodeIncode" />
+                <label asp-for="PostcodeOutcode"></label>
+                <input class="form-control" asp-for="PostcodeOutcode" />
+            </div>
 
-</form>
+            <input type="submit" />
+
+        </form>
+    }
+}
