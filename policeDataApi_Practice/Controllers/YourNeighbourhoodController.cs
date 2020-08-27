@@ -31,8 +31,13 @@ namespace policeDataApi_Practice.Controllers
         public async Task<IActionResult> Index(DisplayLocalNeighbourhoodViewModel model)
         {
             var neighbourhood = await _neighbourhoodRepo.GetNeighbourhoodLocation(model.PostcodeIncode, model.PostcodeOutcode);
+
             neighbourhood.NeighbourhoodTeam = await _neighbourhoodRepo.GetNeighbourhoodTeam(
                 neighbourhood.LocateNeighbourhood.force, 
+                neighbourhood.LocateNeighbourhood.neighbourhood);
+
+            neighbourhood.NeighbourhoodDetails = await _neighbourhoodRepo.GetNeighbourhoodDetails(
+                neighbourhood.LocateNeighbourhood.force,
                 neighbourhood.LocateNeighbourhood.neighbourhood);
 
             if (neighbourhood != null)

@@ -13,13 +13,37 @@ namespace policeDataApi_Practice.Data
     {
         private readonly IHttpClientFactory _clientFactory;
         private Postcode _postcode;
-        private LocateNeighbourhood _lostcateNeighbourhood;
+        private LocateNeighbourhood _locateNeighbourhood;
         private NeighbourhoodTeam[] _neighbourhoodTeam;
+        private LocateSpecificNeighbourhood _neighbourhoodDetails;
 
         public CallNeighbourhoodApiRepo(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
 
+        }
+
+        public async Task<LocateSpecificNeighbourhood> GetNeighbourhoodDetails(string location, string force)
+        {
+            if (location != null && force != null)
+            {
+                var req = new HttpRequestMessage(HttpMethod.Get, $"{location}/{force}");
+                var client = _clientFactory.CreateClient("base-police-api-call");
+                HttpResponseMessage resp = await client.SendAsync(req);
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    var jsonString = await resp.Content.ReadAsStringAsync();
+                    _neighbourhoodDetails = System.Text.Json.JsonSerializer.Deserialize<LocateSpecificNeighbourhood>(jsonString);
+                    return _neighbourhoodDetails;
+                }
+
+                return null;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<DisplayLocalNeighbourhoodViewModel> GetNeighbourhoodLocation(string postcodeIncode, string postcodeOutcode)
@@ -44,11 +68,11 @@ namespace policeDataApi_Practice.Data
             if (respNeighbourhood.IsSuccessStatusCode)
             {
                 var neighbourhoodJsonString = await respNeighbourhood.Content.ReadAsStringAsync();
-                _lostcateNeighbourhood = System.Text.Json.JsonSerializer.Deserialize<LocateNeighbourhood>(neighbourhoodJsonString);
+                _locateNeighbourhood = System.Text.Json.JsonSerializer.Deserialize<LocateNeighbourhood>(neighbourhoodJsonString);
 
                 var viewModel = new DisplayLocalNeighbourhoodViewModel
                 {
-                    LocateNeighbourhood = _lostcateNeighbourhood,
+                    LocateNeighbourhood = _locateNeighbourhood,
                     NeighbourhoodLoaded = postcodeIncode != null ? true : false
                 };
 

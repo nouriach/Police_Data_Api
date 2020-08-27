@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-@{ 
+@{
 
     if (Model.NeighbourhoodLoaded != false)
     {
@@ -13,6 +13,9 @@
         {
             <p>@member.name</p>
         }
+        <p>Neighbourhood Details: @Model.NeighbourhoodDetails.name</p>
+        <p>Neighbourhood Population: @Model.NeighbourhoodDetails.population</p>
+
     }
     else
     {

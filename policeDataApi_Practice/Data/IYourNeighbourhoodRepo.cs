@@ -11,5 +11,6 @@ namespace policeDataApi_Practice.Data
     {
         Task<DisplayLocalNeighbourhoodViewModel> GetNeighbourhoodLocation(string postcodeIncode, string postcodeOutcode);
         Task<NeighbourhoodTeam[]> GetNeighbourhoodTeam(string location, string force);
+        Task<LocateSpecificNeighbourhood> GetNeighbourhoodDetails(string location, string force);
     }
 }
