@@ -2,6 +2,7 @@
 using policeDataApi_Practice.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using static policeDataApi_Practice.Models.StreetLevelOutcomesModel;
@@ -13,6 +14,8 @@ namespace policeDataApi_Practice.ViewModels
         public string Month { get; set; }
         public string Year { get; set; }
         public Postcode Postcode { get; set; }
+
+        [DisplayName("Enter Postcode")]
         public string PostcodePartOne { get; set; }
         public string PostcodePartTwo { get; set; }
         public List<string> FilteredCategories { get; set; }

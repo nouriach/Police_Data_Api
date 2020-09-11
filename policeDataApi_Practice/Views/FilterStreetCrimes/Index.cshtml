@@ -59,23 +59,34 @@
     }
         else
         {
-        <form asp-controller="FilterStreetCrimes" asp-action="Index" method="post">
-            <div>
-                <label asp-for="PostcodePartOne"></label>
-                <input class="form-control" asp-for="PostcodePartOne" />
-                <label asp-for="PostcodePartTwo"></label>
-                <input class="form-control" asp-for="PostcodePartTwo" />
+        <form asp-controller="FilterStreetCrimes" asp-action="Index" method="post" class="justify-content-around">
+            <div class="mb-3">
+                <div>
+                    <p>Enter Postcode</p>
+                </div>
+                <div class="d-flex">
+                    <input class="form-control" asp-for="PostcodePartOne" />
+                    <input class="form-control" asp-for="PostcodePartTwo" />
+                </div>
+            </div>
+            <div class="d-flex mb-3">
+                <div class="pr-5">
+                    <p>Select a Month</p>
+                    <select asp-for="Month" asp-items="Model.Months">
+                        <option>Please select one</option>
+                    </select>
+                </div>
+                <div >
+                    <p>Select a Month</p>
+                    <select asp-for="Year" asp-items="Model.Years">
+                        <option>Please select one</option>
+                    </select>
+                </div>
             </div>
             <div>
-                <select asp-for="Month" asp-items="Model.Months">
-                    <option>Please select one</option>
-                </select>
-                <select asp-for="Year" asp-items="Model.Years">
-                    <option>Please select one</option>
-                </select>
+                <input type="submit" />
             </div>
 
-            <input type="submit" />
 
         </form>
         }
